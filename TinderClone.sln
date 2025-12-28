@@ -1,0 +1,57 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.13.35913.81 d17.13
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Core", "Core", "{36D591C7-65C7-A0D1-1CBC-10CDE441BDC8}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Infrastructure", "Infrastructure", "{8FA9FEEE-AC70-412F-AA22-E4879EF4E1EE}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Presentation", "Presentation", "{6863C9A6-7513-4DAC-98EA-667767CAC7B7}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{45FF6CAC-9FE0-4DE4-AA1B-BFDB19948B0C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TinderClone.Domain", "TinderClone.Domain\TinderClone.Domain.csproj", "{8C3B61F9-19ED-4936-9F7D-9A1109E987EE}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TinderClone.Application", "TinderClone.Application\TinderClone.Application.csproj", "{364E2762-347A-4536-BC0C-6434C6024323}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TinderClone.Infrastructure", "TinderClone.Infrastructure\TinderClone.Infrastructure.csproj", "{1EE66F93-7244-4274-ABD8-3B3AEDF8F050}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TinderClone.WebApi", "TinderClone.WebApi\TinderClone.WebApi.csproj", "{AB3936C9-A5F6-436C-98E8-01AD1C0AEB80}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{8C3B61F9-19ED-4936-9F7D-9A1109E987EE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8C3B61F9-19ED-4936-9F7D-9A1109E987EE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8C3B61F9-19ED-4936-9F7D-9A1109E987EE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8C3B61F9-19ED-4936-9F7D-9A1109E987EE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{364E2762-347A-4536-BC0C-6434C6024323}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{364E2762-347A-4536-BC0C-6434C6024323}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{364E2762-347A-4536-BC0C-6434C6024323}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{364E2762-347A-4536-BC0C-6434C6024323}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1EE66F93-7244-4274-ABD8-3B3AEDF8F050}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1EE66F93-7244-4274-ABD8-3B3AEDF8F050}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1EE66F93-7244-4274-ABD8-3B3AEDF8F050}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1EE66F93-7244-4274-ABD8-3B3AEDF8F050}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AB3936C9-A5F6-436C-98E8-01AD1C0AEB80}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AB3936C9-A5F6-436C-98E8-01AD1C0AEB80}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AB3936C9-A5F6-436C-98E8-01AD1C0AEB80}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AB3936C9-A5F6-436C-98E8-01AD1C0AEB80}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{8C3B61F9-19ED-4936-9F7D-9A1109E987EE} = {36D591C7-65C7-A0D1-1CBC-10CDE441BDC8}
+		{364E2762-347A-4536-BC0C-6434C6024323} = {36D591C7-65C7-A0D1-1CBC-10CDE441BDC8}
+		{1EE66F93-7244-4274-ABD8-3B3AEDF8F050} = {8FA9FEEE-AC70-412F-AA22-E4879EF4E1EE}
+		{AB3936C9-A5F6-436C-98E8-01AD1C0AEB80} = {6863C9A6-7513-4DAC-98EA-667767CAC7B7}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {8B2E2A54-5E20-4D4F-82FA-D2DA69993334}
+	EndGlobalSection
+EndGlobal
