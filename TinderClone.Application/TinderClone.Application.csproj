@@ -10,4 +10,8 @@
     <ProjectReference Include="..\TinderClone.Domain\TinderClone.Domain.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\TinderClone.Infrastructure\TinderClone.Infrastructure.csproj" />
+  </ItemGroup>
+
 </Project>
