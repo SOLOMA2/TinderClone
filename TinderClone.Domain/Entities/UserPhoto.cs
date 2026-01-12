@@ -1,13 +1,27 @@
-﻿using System;
-using TinderClone.Domain.Common;
+﻿using TinderClone.Domain.Common;
 
 namespace TinderClone.Domain.Entities;
 
 public class UserPhoto : BaseEntity
 {
-    public string Url { get; set; } = string.Empty;
-    public bool IsMain { get; set; } 
+    public Guid UserId { get; private set; }
+    public string Url { get; private set; } = string.Empty;
+    public bool IsMain { get; private set; }
+    public DateTime UploadedAt { get; private set; } = DateTime.UtcNow;
 
-    public Guid UserId { get; set; }
-    public virtual User User { get; set; } = null!;
+    public virtual User User { get; private set; } = null!;
+
+    private UserPhoto() { }
+
+    internal UserPhoto(string url, bool isMain)
+    {
+        if (string.IsNullOrWhiteSpace(url)) throw new ArgumentException("URL фото не может быть пустым");
+        Url = url;
+        IsMain = isMain;
+    }
+
+    internal void SetMainStatus(bool isMain)
+    {
+        IsMain = isMain;
+    }
 }

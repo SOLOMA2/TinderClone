@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text.RegularExpressions;
+﻿using NetTopologySuite.Geometries;
 using TinderClone.Domain.Common;
 using TinderClone.Domain.Enums;
 
@@ -8,35 +6,85 @@ namespace TinderClone.Domain.Entities;
 
 public class User : BaseEntity
 {
-    public string FirstName { get; set; } = string.Empty;
-    public string LastName { get; set; } = string.Empty;
-    public string Bio { get; set; } = string.Empty;
+    private readonly List<UserPhoto> _photos = new();
+    
+    private readonly List<Match> _matchesAsUserA = new();
+    private readonly List<Match> _matchesAsUserB = new();
 
-    public DateTime BirthDate { get; set; }
+    public string FirstName { get; private set; } = string.Empty;
+    public string LastName { get; private set; } = string.Empty;
+    public string Bio { get; private set; } = string.Empty;
+    public DateTime BirthDate { get; private set; }
+    public Gender Gender { get; private set; }
+    public Gender PreferredGender { get; private set; }
 
-    public int Age
+    // PostGIS: Используем Point для геолокации вместо double Latitude/Longitude
+    public Point Location { get; private set; } = null!;
+    public DateTime LastActive { get; private set; } = DateTime.UtcNow;
+
+    // Вспомогательные свойства для удобства (не сохраняются в БД)
+    public double Latitude => Location?.Y ?? 0;
+    public double Longitude => Location?.X ?? 0;
+
+    public virtual IReadOnlyCollection<UserPhoto> Photos => _photos.AsReadOnly();
+
+    public virtual IReadOnlyCollection<Match> Matches => _matchesAsUserA.Concat(_matchesAsUserB).ToList().AsReadOnly();
+
+    private User() { } 
+
+    public User(string firstName, string lastName, DateTime birthDate, Gender gender, Gender preferredGender, double lat, double lon)
     {
-        get
-        {
-            var today = DateTime.Today;
-            var age = today.Year - BirthDate.Year;
-            if (BirthDate.Date > today.AddYears(-age)) age--;
-            return age;
-        }
+        if (string.IsNullOrWhiteSpace(firstName)) throw new ArgumentException("Имя обязательно");
+        if (birthDate > DateTime.UtcNow.AddYears(-18)) throw new ArgumentException("Регистрация разрешена только с 18 лет");
+
+        FirstName = firstName;
+        LastName = lastName;
+        BirthDate = birthDate;
+        Gender = gender;
+        PreferredGender = preferredGender;
+        Location = new Point(lon, lat) { SRID = 4326 }; // WGS84
+        LastActive = DateTime.UtcNow;
     }
 
-    public Gender Gender { get; set; }
-    public Gender PreferredGender { get; set; }
+    public void UpdateProfile(string bio, Gender preferredGender)
+    {
+        Bio = bio?.Trim() ?? string.Empty;
+        PreferredGender = preferredGender;
+        LastActive = DateTime.UtcNow;
+    }
 
-    public double Latitude { get; set; }
-    public double Longitude { get; set; }
+    public void UpdateLocation(double lat, double lon)
+    {
+        Location = new Point(lon, lat) { SRID = 4326 }; // WGS84
+        LastActive = DateTime.UtcNow;
+    }
 
-    public DateTime LastActive { get; set; } = DateTime.UtcNow;
+    public void AddPhoto(string url, bool isMain = false)
+    {
+        if (!_photos.Any()) isMain = true;
 
-    public virtual ICollection<UserPhoto> Photos { get; set; } = new List<UserPhoto>();
+        if (isMain)
+        {
+            _photos.ForEach(p => p.SetMainStatus(false));
+        }
 
-    public virtual ICollection<Swipe> SwipesSent { get; set; } = new List<Swipe>();
-    public virtual ICollection<Swipe> SwipesReceived { get; set; } = new List<Swipe>();
-    public virtual ICollection<Match> MatchesAsUserA { get; set; } = new List<Match>();
-    public virtual ICollection<Match> MatchesAsUserB { get; set; } = new List<Match>();
+        _photos.Add(new UserPhoto(url, isMain));
+    }
+
+    public void SetMainPhoto(Guid photoId)
+    {
+        var photo = _photos.FirstOrDefault(p => p.Id == photoId);
+        if (photo == null) throw new InvalidOperationException("Фото не найдено");
+
+        _photos.ForEach(p => p.SetMainStatus(false));
+        photo.SetMainStatus(true);
+    }
+
+    public int GetAge()
+    {
+        var today = DateTime.Today;
+        var age = today.Year - BirthDate.Year;
+        if (BirthDate.Date > today.AddYears(-age)) age--;
+        return age;
+    }
 }
